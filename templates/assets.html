@@ -1,0 +1,33 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Assets{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Assets</h1>
+    </div>
+    <table class='table'>
+        <thead>
+            <th>FILENAME</th>
+            <th>DIRECTORY</th>
+            <th>EXT</th>
+            <th>BYTES</th>
+            <th>MTIME</th>
+            <th>MODDATE</th>
+            <th>MD5</th>
+        </thead>
+        {% for row in assets %}
+        <tr padding='3'>
+            <td>{{ row.name }}</td>
+            <td>{{ row.dir }}</td>
+            <td>{{ row.ext }}</td>
+            <td>{{ row.bytes }}</td>
+            <td>{{ row.mtime }}</td>
+            <td>{{ row.moddate }}</td>
+            <td>{{ row.md5 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
