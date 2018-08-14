@@ -4,7 +4,8 @@ import csv
 import sqlite3
 import sys
 
-INSERT_CMD = '''INSERT INTO assets (dir, name, ext, bytes, mtime, moddate, md5)
+INSERT_CMD = '''INSERT INTO assets (dir, name, ext, bytes, 
+                                    mtime, moddate, md5)
                 VALUES ("{asset.dir}", "{asset.name}", "{asset.ext}",
                          {asset.bytes}, {asset.mtime}, "{asset.moddate}",
                          "{asset.md5}")'''

@@ -1,0 +1,25 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Instances{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Instances</h1>
+    </div>
+    <table class='table'>
+        <thead>
+            <th>FILENAME</th>
+            <th>BATCH_ID</th>
+            <th>ASSET_ID</th>
+        </thead>
+        {% for row in instances %}
+        <tr padding='3'>
+            <td>{{ row.filename }}</td>
+            <td>{{ row.batch_id }}</td>
+            <td>{{ row.asset_id }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

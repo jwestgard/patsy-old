@@ -1,0 +1,27 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Batches{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Batches</h1>
+    </div>
+    <table class='table'>
+        <thead>
+            <th>ID</th>
+            <th>FILENAME</th>
+            <th>NUMBER</th>
+            <th>DATE</th>
+        </thead>
+        {% for row in batches %}
+        <tr padding='3'>
+            <td>{{ row.id }}</td>
+            <td>{{ row.filename }}</td>
+            <td>{{ row.number }}</td>
+            <td>{{ row.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

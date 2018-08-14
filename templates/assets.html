@@ -10,7 +10,6 @@
     <table class='table'>
         <thead>
             <th>FILENAME</th>
-            <th>DIRECTORY</th>
             <th>EXT</th>
             <th>BYTES</th>
             <th>MTIME</th>
@@ -19,8 +18,7 @@
         </thead>
         {% for row in assets %}
         <tr padding='3'>
-            <td>{{ row.name }}</td>
-            <td>{{ row.dir }}</td>
+            <td>{{ row.filename }}</td>
             <td>{{ row.ext }}</td>
             <td>{{ row.bytes }}</td>
             <td>{{ row.mtime }}</td>

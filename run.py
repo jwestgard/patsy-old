@@ -45,5 +45,17 @@ def assets():
     rows = query_db(query)
     return render_template('assets.html', assets=rows)
 
+@app.route('/batches')
+def batches():
+    query = 'SELECT * FROM batches'
+    rows = query_db(query)
+    return render_template('batches.html', batches=rows)
+
+@app.route('/instances')
+def instances():
+    query = 'SELECT * FROM instances'
+    rows = query_db(query)
+    return render_template('instances.html', instances=rows)
+
 if __name__ == '__main__':
     manager.run()
