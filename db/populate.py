@@ -4,29 +4,69 @@ import csv
 import sqlite3
 import sys
 
-INSERT_CMD = '''INSERT INTO assets (dir, name, ext, bytes, 
-                                    mtime, moddate, md5)
-                VALUES ("{asset.dir}", "{asset.name}", "{asset.ext}",
-                         {asset.bytes}, {asset.mtime}, "{asset.moddate}",
-                         "{asset.md5}")'''
 INFILE =  sys.argv[1]
 OUTFILE = sys.argv[2]
 
+class Inventory:
+    def __init__(self, path):
+        self.rows = []
+        with open(path) as invhandle:
+            reader = csv.DictReader(invhandle)
+            for row in reader:
+                print(row)
+                self.rows.append(Asset().from_inv(**row))
+        self.len = len(self.rows)
+        print(self.rows)
+    
+    def __iter__(self):
+        self.counter = 0
+        return self
+    
+    def __next__(self):
+        if self.counter < self.len:
+            current = self.rows[self.counter]
+            self.counter += 1
+            return current
+        else:
+            raise StopIteration
+            
+
 class Asset:
-    def __init__(self, Directory, Filename, Extension, Bytes, MTime, 
-                 Moddate, MD5):
-        self.dir     = Directory
-        self.name    = Filename
-        self.ext     = Extension
-        self.bytes   = Bytes
-        self.mtime   = MTime
-        self.moddate = Moddate
-        self.md5     = MD5
+    def __init__(self):
+        pass
+
+    @classmethod
+    def from_inv(self, **kwargs):
+        self.dir     = kwargs.get('Directory')
+        self.name    = kwargs.get('Filename')
+        self.ext     = kwargs.get('Extension')
+        self.bytes   = kwargs.get('Bytes')
+        self.mtime   = kwargs.get('MTime')
+        self.moddate = kwargs.get('Moddate')
+        self.md5     = kwargs.get('MD5')
+
+    @classmethod
+    def from_database(self, id):
+        pass
+
+    def deposit_to(self, database):
+        INSERT_CMD = '''INSERT INTO assets (
+                            dir, name, ext, bytes, mtime, moddate, md5
+                            )
+                        VALUES ("{asset.dir}", 
+                                "{asset.name}", 
+                                "{asset.ext}",
+                                 {asset.bytes},
+                                 {asset.mtime},
+                                "{asset.moddate}",
+                                "{asset.md5}")'''
+        database.execute(INSERT_CMD.format(asset=self))
+                                
 
 conn = sqlite3.connect(OUTFILE)
-cursor = conn.cursor()
-cursor.execute('''DROP TABLE IF EXISTS assets''')
-cursor.execute('''CREATE TABLE assets(
+database = conn.cursor()
+database.execute('''DROP TABLE IF EXISTS assets''')
+database.execute('''CREATE TABLE assets(
                     id INTEGER PRIMARY KEY,
                     dir TEXT,
                     name TEXT,
@@ -36,17 +76,14 @@ cursor.execute('''CREATE TABLE assets(
                     moddate TEXT,
                     md5 TEXT)'''
                     )
+inventory = Inventory(INFILE)
+for asset in inventory:
+    print(asset)
+    asset.deposit_to(database)
 
-with open(INFILE) as inputfile:
-    reader = csv.DictReader(inputfile, delimiter=',')
-    for d in reader:
-        a = Asset(**d)
-        cursor.execute(INSERT_CMD.format(asset=a))
-
-cursor.execute('SELECT * FROM assets')
+database.execute('SELECT * FROM assets')
 print(
-    "Loaded {} rows into assets table".format(len(cursor.fetchall()))
+    "Loaded {} rows into assets table".format(len(database.fetchall()))
     )
-
 conn.commit()
 conn.close()
