@@ -52,7 +52,7 @@ def batches():
     return render_template('batches.html', batches=rows)
 
 @app.route('/instances')
-def instances():
+def instancescur():
     query = 'SELECT * FROM instances'
     rows = query_db(query)
     return render_template('instances.html', instances=rows)
