@@ -1,0 +1,3 @@
+DB_SCHEMA: 'schema.sql'
+DB_FILE:   '../data/patsy.db'
+PATTERNS:  ['foo', 'bar']
