@@ -45,6 +45,14 @@ def assets():
     rows = query_db(query)
     return render_template('assets.html', assets=rows)
 
+@app.route('/assets/<int:asset_id>')
+def asset(asset_id):
+    aquery = 'SELECT * FROM assets WHERE id = ?'
+    master = query_db(aquery, (asset_id,), one=True)
+    iquery = 'SELECT * FROM instances WHERE instances.asset_id = ?'
+    rows = query_db(iquery)
+    return render_template('asset.html', instances=rows, asset=master)
+
 @app.route('/batches')
 def batches():
     query = 'SELECT * FROM batches'

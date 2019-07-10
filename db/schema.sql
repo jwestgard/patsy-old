@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS assets;
 DROP TABLE IF EXISTS batches;
 DROP TABLE IF EXISTS instances;
 
-CREATE TABLE assets(    
+CREATE TABLE assets(
     id       INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
     bytes    INTEGER,
     md5      TEXT,
@@ -10,14 +10,14 @@ CREATE TABLE assets(
     sha256   TEXT
     );
 
-CREATE TABLE batches(   
+CREATE TABLE batches(
     id       INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
     filename TEXT,
     number   INTEGER,
     date     TEXT
     );
 
-CREATE TABLE instances( 
+CREATE TABLE instances(
     id       INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
     filename TEXT,
     path     TEXT,
