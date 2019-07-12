@@ -1,5 +1,5 @@
 # PATSy
-A preservation asset tracking system. This is a work in progress with two main parts:
+PATSy is a \[P]reservation \[A]sset \[T]racking \[Sy]stem. It is a work in progress. Two main parts are planned:
 
 1. A command-line interface to a SQLite database, and 
 2. A Flask-based web interface.
