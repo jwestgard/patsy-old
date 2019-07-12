@@ -11,13 +11,9 @@ import subcommands
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
-def load(args):
-    print(f'load with args: {args}')
 
 def main():
-
     '''Parse args and set the chosen sub-command as the default function.'''
-
     # main parser for command line arguments
     parser = argparse.ArgumentParser(
                     description='PATSy: Preservation Asset Tracking System.'
@@ -38,7 +34,6 @@ def main():
                     dest='cmd',
                     required=True
                     )
-
     # parser for the "create" sub-command
     create_parser = subparsers.add_parser('create', 
                     help='Load assets to the database',
@@ -48,8 +43,6 @@ def main():
                     help='path to data file',
                     action='store'
                     )
-    #load_parser.set_defaults(func=load)
-
     # parser for the "read" sub-command
     create_parser = subparsers.add_parser('read', 
                     help='Query the database and display results list',
@@ -59,8 +52,6 @@ def main():
                     help='path to data file',
                     action='store'
                     )
-    #load_parser.set_defaults(func=load)
-
     # parser for the "update" sub-command
     create_parser = subparsers.add_parser('update', 
                     help='Modify records of assets in the database',
@@ -70,8 +61,6 @@ def main():
                     help='path to data file',
                     action='store'
                     )
-    #load_parser.set_defaults(func=load)
-
     # parser for the "delete" sub-command
     create_parser = subparsers.add_parser('delete', 
                     help='Remove assets from the database',
@@ -81,11 +70,8 @@ def main():
                     help='path to data file',
                     action='store'
                     )
-    #load_parser.set_defaults(func=load)
-
-    # parse the args and call the default sub-command function
+    # parse the args and call the subcommand as specified
     args = parser.parse_args()
-    # print_header(args.func.__name__)
     subcommand = getattr(subcommands, args.cmd)
     subcommand(args)
 
